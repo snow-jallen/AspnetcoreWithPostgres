@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApplication1.Models;
 
@@ -56,9 +57,19 @@ namespace WebApplication1.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
+            try
+            {
+                var context = new PostgresContext();
+                var items = context.Todo;
+                ViewData["Message"] = $"I found {items.Count()} items, the first of which is {items.First().Title}";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewData["Message"] = ex.Message;
+                return View();
+            }
         }
 
         public IActionResult Privacy()
