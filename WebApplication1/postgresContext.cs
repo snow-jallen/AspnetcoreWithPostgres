@@ -21,7 +21,7 @@ namespace WebApplication1
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("host=144.17.10.32;database=postgres;username=postgres");
+                optionsBuilder.UseNpgsql("host=144.17.10.32;database=postgres;username=postgres;password=password");
             }
         }
 

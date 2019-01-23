@@ -1,0 +1,35 @@
+﻿version: '3'
+
+services:
+
+  web:
+    container_name: docSite
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - 'postgres'
+    networks: 
+      - superCoolNet
+    ports:
+      - "80:80"
+
+
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - "./tables.sql:/docker-entrypoint-initdb.d/tables.sql"
+    networks: 
+      - superCoolNet
+    ports:
+      - "5432:5432"
+
+
+networks: 
+  superCoolNet:
+    driver: bridge
+

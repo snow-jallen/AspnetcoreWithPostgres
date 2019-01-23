@@ -22,15 +22,15 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                using (var conn = new NpgsqlConnection("Server=144.17.10.32;Port=5432;Database=postgres;User Id=postgres;"))
+                using (var conn = new NpgsqlConnection("Server=144.17.10.32;Port=5432;Database=postgres;User Id=postgres;password=password"))
                 {
                     conn.Open();
                     using (var cmd = new NpgsqlCommand())
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "INSERT INTO todo (id, title, iscomplete) VALUES (@id, @title, @iscomplete)";
-                        cmd.Parameters.AddWithValue("id", 1);
-                        cmd.Parameters.AddWithValue("title", "new item");
+                        cmd.CommandText = "INSERT INTO todo (title, iscomplete) VALUES (@title, @iscomplete)";
+                        //cmd.Parameters.AddWithValue("id", 1);
+                        cmd.Parameters.AddWithValue("title", $"new item @ {DateTime.Now}");
                         cmd.Parameters.AddWithValue("iscomplete", false);
                         cmd.ExecuteNonQuery();
                     }
