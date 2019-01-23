@@ -1,19 +1,23 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApplication1
 {
     public partial class PostgresContext : DbContext
     {
-        public PostgresContext()
+        private readonly IConfiguration configuration;
+
+        public PostgresContext(IConfiguration configuration)
         {
+            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public PostgresContext(DbContextOptions<PostgresContext> options)
-            : base(options)
-        {
-        }
+        //public PostgresContext(DbContextOptions<PostgresContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<Todo> Todo { get; set; }
 
@@ -21,7 +25,7 @@ namespace WebApplication1
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("host=144.17.10.32;database=postgres;username=postgres;password=password");
+                optionsBuilder.UseNpgsql(configuration["ConnectionString"]);
             }
         }
 

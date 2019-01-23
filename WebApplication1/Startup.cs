@@ -34,7 +34,7 @@ namespace WebApplication1
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<PostgresContext>()
                 .BuildServiceProvider();
-
+            services.AddScoped<PostgresContext>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

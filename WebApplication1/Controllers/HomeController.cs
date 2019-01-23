@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 using WebApplication1.Models;
 
@@ -13,6 +14,15 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration configuration;
+        private readonly PostgresContext context;
+
+        public HomeController(IConfiguration configuration, PostgresContext context)
+        {
+            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -22,7 +32,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                using (var conn = new NpgsqlConnection("Server=144.17.10.32;Port=5432;Database=postgres;User Id=postgres;password=password"))
+                using (var conn = new NpgsqlConnection(configuration["ConnectionString"]))
                 {
                     conn.Open();
                     using (var cmd = new NpgsqlCommand())
@@ -60,7 +70,6 @@ namespace WebApplication1.Controllers
 
             try
             {
-                var context = new PostgresContext();
                 var items = context.Todo;
                 ViewData["Message"] = $"I found {items.Count()} items, the first of which is {items.First().Title}";
                 return View();

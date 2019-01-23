@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   webapplication1:
-    container_name: web
+    container_name: webServer
     image: ${DOCKER_REGISTRY-}webapplication1
     build:
       context: .
@@ -13,10 +13,12 @@ services:
       - superCoolNet
     ports:
       - "80:80"
+    environment:
+      ConnectionString: "Server=postgresCompose;Port=5432;Database=postgres;User Id=postgres;password=password"
 
 
   postgresCompose:
-    container_name: 'postgresCompose'
+    container_name: 'dbServer'
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
@@ -24,8 +26,8 @@ services:
       - "./WebApplication1/tables.sql:/docker-entrypoint-initdb.d/tables.sql"
     networks: 
       - superCoolNet
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
 
 
 networks: 
