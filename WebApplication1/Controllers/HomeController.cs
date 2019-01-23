@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                using (var conn = new NpgsqlConnection("Server=144.17.24.208;Port=5432;Database=postgres;User Id=postgres;"))
+                using (var conn = new NpgsqlConnection("Server=144.17.10.32;Port=5432;Database=postgres;User Id=postgres;"))
                 {
                     conn.Open();
                     using (var cmd = new NpgsqlCommand())
