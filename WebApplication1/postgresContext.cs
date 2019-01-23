@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
+using WebApplication1.Models;
 
 namespace WebApplication1
 {
@@ -13,11 +14,6 @@ namespace WebApplication1
         {
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
-
-        //public PostgresContext(DbContextOptions<PostgresContext> options)
-        //    : base(options)
-        //{
-        //}
 
         public virtual DbSet<Todo> Todo { get; set; }
 

@@ -26,8 +26,6 @@ services:
       - "./WebApplication1/tables.sql:/docker-entrypoint-initdb.d/tables.sql"
     networks: 
       - superCoolNet
-#    ports:
-#      - "5432:5432"
 
 
 networks: 
