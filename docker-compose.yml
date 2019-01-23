@@ -1,27 +1,27 @@
-﻿version: '3'
+version: '3.4'
 
 services:
-  web:
-    container_name: docSite
+  webapplication1:
+    container_name: web
+    image: ${DOCKER_REGISTRY-}webapplication1
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: WebApplication1/Dockerfile
     depends_on:
-      - 'postgres'
+      - 'postgresCompose'
     networks: 
       - superCoolNet
     ports:
       - "80:80"
 
 
-
-  postgres:
-    container_name: 'postgres'
+  postgresCompose:
+    container_name: 'postgresCompose'
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
     volumes:
-      - "./tables.sql:/docker-entrypoint-initdb.d/tables.sql"
+      - "./WebApplication1/tables.sql:/docker-entrypoint-initdb.d/tables.sql"
     networks: 
       - superCoolNet
     ports:
